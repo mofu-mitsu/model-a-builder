@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO / メタタグ -->
+    <title>モデルA 超詳細スタック診断 | ソシオニクス</title>
+    <meta name="description" content="ソシオニクスの「モデルA」をベースにした超詳細な機能スタック診断！8つのブロックごとに当てはまる具体的な特徴を選んで、自分の本当のタイプとサブタイプを分析しよう！">
+    <meta name="keywords" content="ソシオニクス, MBTI, モデルA, 心理機能, 診断, 16タイプ, LII, ILI">
+    <meta name="author" content="にー観測所">
+
+    <!-- OGP (SNSシェア用設定) -->
+    <meta property="og:site_name" content="モデルA 超詳細スタック診断 | ソシオニクス">
+    <meta property="og:title" content="モデルA 超詳細スタック診断 | ソシオニクス">
+    <meta property="og:description" content="ソシオニクスの「モデルA」をベースにした機能スタック診断！あなたの最強機能や弱点、サブタイプを導き出します。">
+    <meta property="og:type" content="website">
+    <!-- ↓リポジトリ名が決まったらURLを修正してね！ -->
+    <meta property="og:url" content="https://mofu-mitsu.github.io/model-a-builder/">
+    <!-- ↓もしOGP用の画像（サムネイル）を作ったらそのURLを入れる。無ければこのままでもOK -->
+    <meta property="og:image" content="https://mofu-mitsu.github.io/model-a-builder/ogp-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon (絵文字の🧠) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text x=%2250%%22 y=%2250%%22 style=%22dominant-baseline:central;text-anchor:middle;font-size:90px;%22>🧠</text></svg>">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container" id="capture-area">
+        
+        <!-- 上部のナビゲーション（CSS消えないように調整済み！） -->
+        <div class="top-nav no-capture">
+            <a href="https://mofu-mitsu.github.io/" id="home-link" class="top-link"><i class="fa-solid fa-house"></i> ホームに戻る</a>
+            <button id="back-to-title-btn" class="top-link hidden"><i class="fa-solid fa-rotate-left"></i> タイトルに戻る</button>
+        </div>
+
+        <!-- スタート画面 -->
+        <div id="start-screen">
+            <h1><i class="fa-solid fa-cube"></i> モデルA 超詳細診断</h1>
+            <p>8つのブロックごとに当てはまるものを<b>複数選択</b>してね！</p>
+            
+            <div class="input-group">
+                <label for="self-type">あなたの自認タイプ（任意）</label>
+                <input type="text" id="self-type" placeholder="例: LII, 未定など">
+            </div>
+
+            <button id="start-btn" class="primary-btn"><i class="fa-solid fa-play"></i> 診断スタート！</button>
+        </div>
+
+        <!-- 質問画面 -->
+        <div id="quiz-screen" class="hidden">
+            <div class="progress-bar"><span id="progress-text">1/8</span></div>
+            <h2 id="block-name"></h2>
+            <p id="block-desc" class="block-desc"></p>
+            <p class="instruction">※当てはまるものを複数選べます（迷ったら「ピンとこない」でもOK！）</p>
+            <div id="options-container" class="options-grid"></div>
+            <div class="nav-buttons">
+                <button id="back-btn" class="secondary-btn"><i class="fa-solid fa-arrow-left"></i> 戻る</button>
+                <button id="next-btn" class="primary-btn">次へ <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- 結果画面 -->
+        <div id="result-screen" class="hidden">
+            <h2><i class="fa-solid fa-crown"></i> 診断結果</h2>
+            <div class="self-type-display">自認タイプ： <span id="display-self-type"></span></div>
+            <div id="subtype-result" class="highlight-box"></div>
+            
+            <div class="result-section" id="type-desc-section">
+                <h3><i class="fa-solid fa-book-open"></i> 基本タイプの解説</h3>
+                <p id="type-description" class="desc-text"></p>
+            </div>
+
+            <div class="result-section">
+                <h3><i class="fa-solid fa-list-check"></i> あなたが選んだ機能リスト</h3>
+                <ul id="user-history-list" class="history-list"></ul>
+            </div>
+
+            <div class="result-section">
+                <h3><i class="fa-solid fa-ranking-star"></i> タイプ一致度ランキング</h3>
+                <ul id="ranking-list"></ul>
+            </div>
+            
+            <div class="action-buttons no-capture">
+                <button id="save-img-btn" class="action-btn share-color"><i class="fa-solid fa-camera"></i> 結果を画像保存</button>
+                <button id="share-btn" class="action-btn share-color"><i class="fa-solid fa-share-nodes"></i> シェアする</button>
+                <button id="retry-btn" class="action-btn retry-color" style="margin-top:15px;"><i class="fa-solid fa-rotate-right"></i> もう一度診断</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- トースト通知 -->
+    <div id="toast"></div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    background-color: #181825;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #313244;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h1 { text-align: center; color: #89b4fa; font-size: 1.8em; margin-bottom: 5px; }
+h2 { color: #f9e2af; text-align: center; margin-bottom: 10px;}
+p { text-align: center; color: #a6adc8; font-size: 0.95em; margin-bottom: 25px; line-height: 1.6; }
+
+.hidden { display: none !important; }
+
+.input-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+.input-group label { margin-bottom: 8px; font-weight: bold; color: #f5e0dc; }
+.input-group input { padding: 12px; border-radius: 8px; background-color: #313244; border: 1px solid #585b70; color: #cdd6f4; font-size: 1em; }
+
+.primary-btn {
+    width: 100%; padding: 15px; background: linear-gradient(135deg, #89b4fa, #cba6f7); color: #11111b; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: all 0.2s;
+}
+.primary-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(137, 180, 250, 0.4); }
+
+.secondary-btn {
+    width: 100%; padding: 15px; background-color: #45475a; color: #cdd6f4; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: all 0.2s;
+}
+.secondary-btn:hover { background-color: #585b70; }
+
+.nav-buttons { display: flex; gap: 15px; margin-top: 20px; }
+
+.progress-bar { text-align: right; font-size: 1.2em; font-weight: bold; color: #89b4fa; border-bottom: 2px solid #313244; padding-bottom: 10px; margin-bottom: 20px; }
+.block-desc { background-color: #313244; padding: 15px; border-radius: 8px; font-weight: bold; }
+.instruction { color: #f38ba8; font-weight: bold; font-size: 0.9em; margin-bottom: 15px; }
+
+.options-grid { display: flex; flex-direction: column; gap: 12px; }
+
+.option-card {
+    background-color: #1e1e2e;
+    border: 2px solid #45475a;
+    color: #cdd6f4;
+    text-align: left;
+    padding: 18px 20px;
+    border-radius: 10px;
+    font-size: 0.95em;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.option-card:hover { border-color: #89b4fa; background-color: #2a2b3c; }
+
+/* 選択された時のデザイン */
+.option-card.active {
+    background-color: #313244;
+    border-color: #a6e3a1;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(166, 227, 161, 0.3);
+}
+.option-card.active::after {
+    content: '\f00c';
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #a6e3a1;
+    font-size: 1.2em;
+    margin-left: 10px;
+}
+
+.option-card.none-active { border-color: #f38ba8; background-color: #313244; color: #fff;}
+
+.highlight-box { background-color: #f38ba8; color: #11111b; padding: 15px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 20px; line-height: 1.6;}
+.self-type-display { text-align: center; font-size: 1.1em; margin-bottom: 15px; color: #a6adc8; }
+ul { list-style: none; padding: 0; }
+li { background-color: #313244; margin-bottom: 8px; padding: 12px; border-radius: 5px; display: flex; justify-content: space-between; border-left: 5px solid #89b4fa; }
+li:nth-child(1) { border-left-color: #f9e2af; font-size: 1.1em; font-weight: bold;}
+
+/* (前回のCSSの末尾に追加・変更) */
+.result-section {
+    background-color: #313244;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.result-section h3 {
+    margin-top: 0;
+    color: #f9e2af;
+    border-bottom: 1px solid #45475a;
+    padding-bottom: 8px;
+}
+.desc-text {
+    text-align: left;
+    font-size: 0.95em;
+    color: #cdd6f4;
+}
+.history-list li {
+    background-color: #1e1e2e;
+    border-left: 3px solid #cba6f7;
+    margin-bottom: 5px;
+    padding: 8px;
+    font-size: 0.9em;
+}
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+.action-btn {
+    width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: all 0.2s;
+}
+.share-color { background-color: #a6e3a1; color: #11111b; }
+.share-color:hover { background-color: #89dceb; }
+.retry-color { background-color: #45475a; color: #cdd6f4; }
+.retry-color:hover { background-color: #585b70; }
+
+/* --- 前回のCSSをベースに以下を追加・上書き --- */
+/* ホームに戻るボタン */
+.home-link {
+    display: inline-block;
+    color: #89b4fa;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    transition: color 0.2s;
+}
+.home-link:hover {
+    color: #cba6f7;
+}
+/* 画像保存時に写さない要素 */
+.no-capture {
+    /* jsで制御するのでこのままでOK */
+}
+/* スマホ用レスポンシブ (画面幅600px以下) */
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    .container { padding: 20px 15px; margin-top: 10px; margin-bottom: 10px; }
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.3em; }
+    .option-card { padding: 15px; font-size: 0.9em; }
+    .primary-btn, .secondary-btn, .action-btn { padding: 12px; font-size: 1em; }
+    .nav-buttons { flex-direction: column-reverse; gap: 10px; }
+    .block-desc { font-size: 0.9em; padding: 12px; }
+}
+
+/* トースト通知のスタイル */
+#toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #f38ba8;
+    color: #11111b;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+}
+
+#toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    background-color: #181825;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #313244;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* --- トップナビゲーション（ホーム/タイトルへ戻る） --- */
+.top-nav {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+.top-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #89b4fa;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95em;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+}
+.top-link:hover {
+    color: #cba6f7;
+}
+
+h1 { text-align: center; color: #89b4fa; font-size: 1.8em; margin-bottom: 5px; }
+h2 { color: #f9e2af; text-align: center; margin-bottom: 10px;}
+p { text-align: center; color: #a6adc8; font-size: 0.95em; margin-bottom: 25px; line-height: 1.6; }
+
+.hidden { display: none !important; }
+
+.input-group { display: flex; flex-direction: column; margin-bottom: 20px; }
+.input-group label { margin-bottom: 8px; font-weight: bold; color: #f5e0dc; }
+.input-group input { padding: 12px; border-radius: 8px; background-color: #313244; border: 1px solid #585b70; color: #cdd6f4; font-size: 1em; }
+
+.primary-btn {
+    width: 100%; padding: 15px; background: linear-gradient(135deg, #89b4fa, #cba6f7); color: #11111b; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: all 0.2s;
+}
+.primary-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(137, 180, 250, 0.4); }
+
+.secondary-btn {
+    width: 100%; padding: 15px; background-color: #45475a; color: #cdd6f4; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: all 0.2s;
+}
+.secondary-btn:hover { background-color: #585b70; }
+
+.nav-buttons { display: flex; gap: 15px; margin-top: 20px; }
+
+.progress-bar { text-align: right; font-size: 1.2em; font-weight: bold; color: #89b4fa; border-bottom: 2px solid #313244; padding-bottom: 10px; margin-bottom: 20px; }
+.block-desc { background-color: #313244; padding: 15px; border-radius: 8px; font-weight: bold; line-height: 1.5; }
+.instruction { color: #f38ba8; font-weight: bold; font-size: 0.9em; margin-bottom: 15px; text-align: left; }
+
+.options-grid { display: flex; flex-direction: column; gap: 12px; }
+
+.option-card {
+    background-color: #1e1e2e;
+    border: 2px solid #45475a;
+    color: #cdd6f4;
+    text-align: left;
+    padding: 18px 20px;
+    border-radius: 10px;
+    font-size: 0.95em;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.option-card:hover { border-color: #89b4fa; background-color: #2a2b3c; }
+
+.option-card.active {
+    background-color: #313244;
+    border-color: #a6e3a1;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(166, 227, 161, 0.3);
+}
+.option-card.active::after {
+    content: '\f00c';
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #a6e3a1;
+    font-size: 1.2em;
+    margin-left: 10px;
+}
+
+.option-card.none-active { border-color: #f38ba8; background-color: #313244; color: #fff;}
+
+.highlight-box { background-color: #f38ba8; color: #11111b; padding: 15px; border-radius: 8px; font-weight: bold; text-align: center; margin-bottom: 20px; line-height: 1.6;}
+.self-type-display { text-align: center; font-size: 1.1em; margin-bottom: 15px; color: #a6adc8; }
+
+/* 結果リスト周り */
+ul { list-style: none; padding: 0; margin: 0; }
+.result-section {
+    background-color: #313244;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.result-section h3 {
+    margin-top: 0;
+    color: #f9e2af;
+    border-bottom: 1px solid #45475a;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+.desc-text {
+    text-align: left;
+    font-size: 0.95em;
+    color: #cdd6f4;
+    margin-bottom: 0;
+}
+.history-list li {
+    background-color: #1e1e2e;
+    border-left: 3px solid #cba6f7;
+    margin-bottom: 8px;
+    padding: 10px 12px;
+    font-size: 0.9em;
+    border-radius: 0 5px 5px 0;
+}
+#ranking-list li {
+    background-color: #1e1e2e;
+    margin-bottom: 8px;
+    padding: 12px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    border-left: 5px solid #89b4fa;
+}
+#ranking-list li:nth-child(1) { border-left-color: #f9e2af; font-size: 1.1em; font-weight: bold;}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+.action-btn {
+    width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: all 0.2s;
+}
+.share-color { background-color: #a6e3a1; color: #11111b; }
+.share-color:hover { background-color: #89dceb; }
+.retry-color { background-color: #45475a; color: #cdd6f4; }
+.retry-color:hover { background-color: #585b70; }
+
+/* スマホ用レスポンシブ */
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    .container { padding: 20px 15px; margin-top: 10px; margin-bottom: 10px; }
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.3em; }
+    .option-card { padding: 15px; font-size: 0.9em; }
+    .primary-btn, .secondary-btn, .action-btn { padding: 12px; font-size: 1em; }
+    .nav-buttons { flex-direction: column-reverse; gap: 10px; }
+    .block-desc { font-size: 0.9em; padding: 12px; }
+}
+
+/* トースト通知 */
+#toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #f38ba8;
+    color: #11111b;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+}
+#toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}
