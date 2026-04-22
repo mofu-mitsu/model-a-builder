@@ -288,22 +288,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 画像保存 (html2canvas)
     document.getElementById("save-img-btn").addEventListener("click", () => {
-        // no-captureクラスのついた要素（ボタンなど）を一時的に隠す
         const noCaptureElements = document.querySelectorAll(".no-capture");
         noCaptureElements.forEach(el => el.style.display = "none");
         
         html2canvas(document.getElementById("capture-area"), {
             backgroundColor: "#1e1e2e", scale: 2
         }).then(canvas => {
-            // 隠した要素を元に戻す
             noCaptureElements.forEach(el => el.style.display = "");
             
-            const link = document.createElement("a");
-            link.download = "socionics_result.png";
-            link.href = canvas.toDataURL("image/png");
-            link.click();
+            const imgData = canvas.toDataURL("image/png");
+            
+            // 端末がスマホかPCかを判定
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // スマホの場合はモーダルを表示して長押し保存させる
+                const modal = document.getElementById("image-modal");
+                document.getElementById("generated-image").src = imgData;
+                modal.classList.remove("hidden");
+            } else {
+                // PCの場合は直接ダウンロード
+                const link = document.createElement("a");
+                link.download = "socionics_result.png";
+                link.href = imgData;
+                link.click();
+            }
         });
     });
+
+    // モーダルを閉じる処理
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", () => {
+            document.getElementById("image-modal").classList.add("hidden");
+        });
+    }
 
     // シェア機能 (Web Share API)
     document.getElementById("share-btn").addEventListener("click", () => {
