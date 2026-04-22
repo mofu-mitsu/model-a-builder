@@ -18,7 +18,7 @@
     <!-- ↓リポジトリ名が決まったらURLを修正してね！ -->
     <meta property="og:url" content="https://mofu-mitsu.github.io/model-a-builder/">
     <!-- ↓もしOGP用の画像（サムネイル）を作ったらそのURLを入れる。無ければこのままでもOK -->
-    <meta property="og:image" content="https://mofu-mitsu.github.io/model-a-builder/ogp.png">
+    <meta property="og:image" content="https://mofu-mitsu.github.io/model-a-builder/ogp-image.png">
     <meta name="twitter:card" content="summary_large_image">
 
     <!-- Favicon (絵文字の🧠) -->
@@ -94,7 +94,13 @@
 
     <!-- トースト通知 -->
     <div id="toast"></div>
-
+    <div id="image-modal" class="hidden">
+        <div class="modal-content">
+            <p><i class="fa-solid fa-download"></i> 画像を長押しして保存してね！</p>
+            <img id="generated-image" src="" alt="診断結果">
+            <button id="close-modal-btn" class="secondary-btn">閉じる</button>
+        </div>
+    </div>
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
