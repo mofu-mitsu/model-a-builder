@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!userStack[currentStep].includes("none")) noneCard.classList.remove("none-active");
     }
 
-    // ★結果発表＆スコア計算＆GAS送信
+// ★結果発表＆スコア計算＆GAS送信（サブタイプ判定強化版）
     function showResult() {
         quizScreen.classList.add("hidden");
         document.getElementById("display-self-type").textContent = selfType;
@@ -217,28 +217,50 @@ document.addEventListener("DOMContentLoaded", () => {
             // 単独1位の場合
             document.getElementById("type-desc-section").classList.remove("hidden");
             const bestMatch = scores[0];
+            const ideal = bestMatch.idealStack;
             document.getElementById("type-description").textContent = bestMatch.desc;
 
-            subtypeMsg = `判定された基本タイプは <strong>${bestMatch.type}</strong> です！<br>`;
-            const demonstrativeFunc = bestMatch.idealStack[7]; 
-            const ignoringFunc = bestMatch.idealStack[6];      
-
-            let isDemonstrativeTop = false;
-            let isIgnoringTop = false;
-            for(let i=0; i<4; i++){
-                if(userStack[i].includes(demonstrativeFunc)) isDemonstrativeTop = true;
-                if(userStack[i].includes(ignoringFunc)) isIgnoringTop = true;
-            }
+            // サブタイプ判定用データ
+            const u0 = userStack[0]; // ユーザーの第1機能枠
+            const u1 = userStack[1]; // ユーザーの第2機能枠
+            const topTwo = u0.concat(u1); // 上位2枠の合計
             
-            if (isDemonstrativeTop) {
-                subtypeMsg += `<br><i class="fa-solid fa-bolt"></i> <strong>サブタイプ： ${bestMatch.type.split(" ")[0]}-${demonstrativeFunc} 検出！</strong><br>証明機能（${demonstrativeFunc}）を本来よりもゴリゴリに信頼して使っています！`;
-                gasSubtypeStr = `${bestMatch.type.split(" ")[0]}-${demonstrativeFunc} サブタイプ`;
-            } else if (isIgnoringTop) {
-                subtypeMsg += `<br><i class="fa-solid fa-bolt"></i> <strong>サブタイプ： ${bestMatch.type.split(" ")[0]}-${ignoringFunc} 検出！</strong><br>無視機能（${ignoringFunc}）をあえて強く使おうとする独特なバランスです！`;
-                gasSubtypeStr = `${bestMatch.type.split(" ")[0]}-${ignoringFunc} サブタイプ`;
+            let subtypeName = "";
+            let subtypeDesc = "";
+
+            // 優先順位1：証明機能(8)を上位で使っている（みつきのLII-Niなど）
+            if (topTwo.includes(ideal[7])) {
+                subtypeName = `${bestMatch.type.split(" ")[0]}-${ideal[7]}`;
+                subtypeDesc = `証明機能（${ideal[7]}）を本来よりも意識的に信頼して使っています！`;
+            } 
+            // 優先順位2：創造機能(2)を主機能の枠に入れている（IEI-Feなど）
+            else if (u0.includes(ideal[1])) {
+                subtypeName = `${bestMatch.type.split(" ")[0]}-${ideal[1]}`;
+                subtypeDesc = `創造機能（${ideal[1]}）のエネルギーが非常に強く、より能動的で外向的な傾向があります！`;
+            }
+            // 優先順位3：無視機能(7)を上位で使っている
+            else if (topTwo.includes(ideal[6])) {
+                subtypeName = `${bestMatch.type.split(" ")[0]}-${ideal[6]}`;
+                subtypeDesc = `本来は無視するはずの${ideal[6]}を意識的に使おうとする、独特なバランスを持っています。`;
+            }
+            // 優先順位4：主機能(1)を主機能の枠で選んでいる（LII-Tiなど）
+            else if (u0.includes(ideal[0])) {
+                subtypeName = `${bestMatch.type.split(" ")[0]}-${ideal[0]}`;
+                subtypeDesc = `主機能（${ideal[0]}）の純度が非常に高く、そのタイプの性質が色濃く現れています！`;
+            }
+            // デフォルト
+            else {
+                subtypeName = "王道バランス";
+                subtypeDesc = "機能のバランスはかなり王道的！THE・" + bestMatch.type + " という感じです！";
+            }
+
+            gasSubtypeStr = subtypeName;
+            subtypeMsg = `判定された基本タイプは <strong>${bestMatch.type}</strong> です！<br><br>`;
+            
+            if (subtypeName !== "王道バランス") {
+                subtypeMsg += `<i class="fa-solid fa-bolt"></i> <strong>サブタイプ： ${subtypeName} 検出！</strong><br>${subtypeDesc}`;
             } else {
-                subtypeMsg += `<br>機能のバランスはかなり王道的！THE・${bestMatch.type} という感じです！`;
-                gasSubtypeStr = "王道バランス";
+                subtypeMsg += subtypeDesc;
             }
         }
 
@@ -246,36 +268,32 @@ document.addEventListener("DOMContentLoaded", () => {
         resultScreen.classList.remove("hidden");
 
         // ★★★ GASへのデータ送信処理（メール用データ作成） ★★★
-        if (GAS_WEBAPP_URL !== "ここに_GASのURLを_貼り付ける" && GAS_WEBAPP_URL !== "") {
+        if (GAS_WEBAPP_URL !== "ここに_GASのURLを_貼り付けてね" && GAS_WEBAPP_URL !== "") {
             const bestMatchTypeName = topTies.length > 1 ? "同率複数" : scores[0].type;
             
-            // メール本文用に「選んだ履歴」を整形する
             let historyText = "";
             for (let i = 0; i < 8; i++) {
                 const funcNames = userStack[i].includes("none") ? "ピンとこない" : userStack[i].join(", ");
                 historyText += `【${blocks[i].name}】: ${funcNames}\n`;
             }
 
-            // メール本文用に「全ランキング」を整形する
             let rankingText = "";
             scores.forEach(item => {
                 rankingText += `${item.rank}位: ${item.type} (${item.score}pt)\n`;
             });
 
-            // GASへ送るデータのまとまり
             const payload = {
                 selfType: selfType,
                 bestMatch: bestMatchTypeName,
-                subtypeMsg: gasSubtypeStr.replace(/<[^>]*>?/gm, ''), // HTMLタグ消去
+                subtypeMsg: gasSubtypeStr.replace(/<[^>]*>?/gm, ''), 
                 userStack: userStack,
                 historyText: historyText,
                 rankingText: rankingText
             };
 
-            // ★ ここを修正！(mode: "no-cors" を追加してセキュリティブロックを回避)
             fetch(GAS_WEBAPP_URL, {
                 method: "POST",
-                mode: "no-cors", // ←これが超重要！！
+                mode: "no-cors",
                 headers: { "Content-Type": "text/plain" },
                 body: JSON.stringify(payload)
             }).then(() => {
