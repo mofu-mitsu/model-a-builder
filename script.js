@@ -345,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // シェア機能 (Web Share API)
     document.getElementById("share-btn").addEventListener("click", () => {
         const topRankText = document.getElementById("ranking-list").firstChild.innerText;
-        const shareText = `私のソシオニクス診断結果は\n【${topRankText}】でした！\n#モデルA超詳細診断 #ソシオニクス\nあなたも診断してみてね！ ${window.location.href}`;
+        const shareText = `私のソシオニクス診断結果は\n【${topRankText}】でした！\n#モデルA超詳細診断 #ソシオニクス\nあなたも診断してみてね！`;
         
         if (navigator.share) {
             navigator.share({ 
