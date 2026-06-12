@@ -22,9 +22,7 @@
     <meta property="og:title" content="モデルA 超詳細スタック診断 | ソシオニクス">
     <meta property="og:description" content="ソシオニクスの「モデルA」をベースにした機能スタック診断！あなたの最強機能や弱点、サブタイプを導き出します。">
     <meta property="og:type" content="website">
-    <!-- ↓リポジトリ名が決まったらURLを修正してね！ -->
     <meta property="og:url" content="https://mofu-mitsu.github.io/model-a-builder/">
-    <!-- ↓もしOGP用の画像（サムネイル）を作ったらそのURLを入れる。無ければこのままでもOK -->
     <meta property="og:image" content="https://mofu-mitsu.github.io/model-a-builder/ogp.png">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -38,7 +36,7 @@
 <body>
     <div class="container" id="capture-area">
         
-        <!-- 上部のナビゲーション（CSS消えないように調整済み！） -->
+        <!-- 上部のナビゲーション -->
         <div class="top-nav no-capture">
             <a href="https://mofu-mitsu.github.io/lab.html" id="home-link" class="top-link"><i class="fa-solid fa-house"></i> ホームに戻る</a>
             <button id="back-to-title-btn" class="top-link hidden"><i class="fa-solid fa-rotate-left"></i> タイトルに戻る</button>
@@ -70,15 +68,17 @@
             </div>
         </div>
 
+        <!-- 結果画面 -->
         <div id="result-screen" class="hidden">
             <h2><i class="fa-solid fa-crown"></i> 診断結果</h2>
             <div class="self-type-display">自認タイプ： <span id="display-self-type"></span></div>
             <div id="subtype-result" class="highlight-box"></div>
             
-            <!-- ★追加：みつきの独自理論に関する但し書き（画像保存時には写らない） -->
-            <p class="disclaimer no-capture" style="font-size: 0.8em; color: #a6adc8; text-align: center; margin-top: -10px; margin-bottom: 25px; line-height: 1.5; padding: 0 10px;">
+            <!-- ★崩れ防止＆重なり防止にマージンとパディングを安全な数値に修正 -->
+            <p class="disclaimer no-capture" style="font-size: 0.85em; color: #a6adc8; text-align: center; margin: 15px auto; line-height: 1.6; padding: 0 15px; max-width: 90%;">
                 ※当診断における「LII-Ni」「ILE-Te」などのサブタイプ表記は、一般的なソシオニクスの定義ではなく、第7・第8機能（無視・証明機能）の強さにも着目した<b>独自の研究・表現</b>です。
             </p>
+
             <div class="result-section" id="type-desc-section">
                 <h3><i class="fa-solid fa-book-open"></i> 基本タイプの解説</h3>
                 <p id="type-description" class="desc-text"></p>
