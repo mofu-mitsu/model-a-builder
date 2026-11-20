@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         quizScreen.classList.add("hidden");
         startScreen.classList.remove("hidden");
         updateTopNav("start");
+        window.scrollTo(0, 0);
     }
 
     document.getElementById("retry-btn").addEventListener("click", resetQuiz);
@@ -80,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 質問画面の描画
     function renderStep() {
+        window.scrollTo(0, 0);
         const block = blocks[currentStep];
         document.getElementById("progress-text").textContent = `${currentStep + 1} / 8`;
         document.getElementById("block-name").textContent = block.name;
@@ -136,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ★結果発表＆スコア計算＆GAS送信（サブタイプ判定強化版）
     function showResult() {
+        window.scrollTo(0, 0);
         quizScreen.classList.add("hidden");
         document.getElementById("display-self-type").textContent = selfType;
 
@@ -345,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // シェア機能 (Web Share API)
     document.getElementById("share-btn").addEventListener("click", () => {
         const topRankText = document.getElementById("ranking-list").firstChild.innerText;
-        const shareText = `私のソシオニクス診断結果は\n【${topRankText}】でした！\n#モデルAビルダー #モデルA超詳細診断 #ソシオニクス\nあなたも診断してみてね！`;
+        const shareText = `私のソシオニクス診断結果は\n【${topRankText}】でした！\n#モデルA超詳細診断 #ソシオニクス\nあなたも診断してみてね！`;
         
         if (navigator.share) {
             navigator.share({ 

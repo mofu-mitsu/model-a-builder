@@ -428,3 +428,12 @@ ul { list-style: none; padding: 0; margin: 0; }
     opacity: 1;
     bottom: 50px;
 }
+
+/* PC向け: 選択肢を2カラムにしてスクロール量を減らす */
+@media (min-width: 768px) {
+    .options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+}
